@@ -1,11 +1,33 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 int sum_ascii(const string &); // Receives a single string and returns the sum of that string's character's ASCII values
 
+const string INPUT_FILENAME = "lab37Data.txt"; // Filename for data input
+
 int main()
 {
-    cout << sum_ascii("Hello") << endl;
+    ifstream inputFile;     // For ascii codes
+    string fileLine = "";   // A line from the input file
+    
+    // Try opening file and output error to console if file is no good
+    inputFile.open(INPUT_FILENAME);
+    if (!inputFile)
+    {
+        throw runtime_error("Error opening file: " + INPUT_FILENAME);
+    }
+    else
+    {
+        while (getline(inputFile, fileLine))
+        {
+            bTree.insertNode(fileLine);
+            lineCount++;
+        }
+
+        // CLOSE THE F-ING FILE
+        inputFile.close();
+    }
 
     return 0;
 }
