@@ -1,3 +1,7 @@
+/*  
+    Lab 37: Hash table
+*/
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -17,6 +21,7 @@ int main()
     int sum = 0;                       // Sum of ascii codes
     map<int, list<string>> hash_table; // Table holding values from file
     int hashIndex = 0;                 // Hash index of line within loop
+    const int NUM_LINES_OUTPUT = 100;  // Number of lines to output
 
     // Try opening file and output error to console if file is no good
     inputFile.open(INPUT_FILENAME);
@@ -45,16 +50,16 @@ int main()
         inputFile.close();
     }
 
-    int counter = 0;
-    for (auto itMap = hash_table.begin(); itMap != hash_table.end() && counter < 100; itMap++)
+    int counter = 0;    // Counter to determine number of lines to output
+    for (auto itMap = hash_table.begin(); itMap != hash_table.end() && counter < NUM_LINES_OUTPUT; itMap++) // For each map object
     {
-        for (auto itList = itMap->second.begin(); itList != itMap->second.end() && counter < 100; itList++)
+        for (auto itList = itMap->second.begin(); itList != itMap->second.end() && counter < NUM_LINES_OUTPUT; itList++) // For each list inside map
         {
-            cout << fixed << setw(3) << right << ++counter << ". " << *itList << endl;
+            cout << fixed << setw(3) << right << ++counter << ". " << *itList << endl; // Counter incremented in statement
         }
     }
 
-    cout << "\nLine count: " << lineCount << endl;
+    cout << "\nTotal lines read from " << INPUT_FILENAME << ": " << lineCount << endl;
 
     return 0;
 }
@@ -69,11 +74,3 @@ int gen_hash_index(const string &s)
     }
     return sum;
 }
-
-/*
-These targets are present in the dataset and can be used for testing:
-536B9DFC93AF
-1DA9D64D02A0
-666D109AA22E
-E1D2665B21EA
-*/
