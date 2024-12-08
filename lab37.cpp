@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <map>
 #include <list>
@@ -31,11 +32,11 @@ int main()
             auto it = hash_table.find(hashIndex);
             if (it == hash_table.end()) // Key does NOT exist
             {
-                hash_table.insert({hashIndex, {fileLine}});     // Create new entry
+                hash_table.insert({hashIndex, {fileLine}}); // Create new entry
             }
             else
             {
-                it->second.push_back(fileLine);   // Add to current entry
+                it->second.push_back(fileLine); // Add to current entry
             }
 
             lineCount++;
@@ -45,13 +46,15 @@ int main()
     }
 
     int counter = 0;
-    for (auto it = hash_table.begin(); it != hash_table.end() && counter < 100; it++)
+    for (auto itMap = hash_table.begin(); itMap != hash_table.end() && counter < 100; itMap++)
     {
-        
+        for (auto itList = itMap->second.begin(); itList != itMap->second.end() && counter < 100; itList++)
+        {
+            cout << fixed << setw(3) << right << ++counter << ". " << *itList << endl;
+        }
     }
-    
 
-    cout << lineCount << endl;
+    cout << "\nLine count: " << lineCount << endl;
 
     return 0;
 }
