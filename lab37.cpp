@@ -31,18 +31,27 @@ int main()
             auto it = hash_table.find(hashIndex);
             if (it == hash_table.end()) // Key does NOT exist
             {
-                hash_table.insert({hashIndex, {fileLine}});
-            } else {
-                hash_table.at(hashIndex).push_back(fileLine);
+                hash_table.insert({hashIndex, {fileLine}});     // Create new entry
             }
-            
+            else
+            {
+                it->second.push_back(fileLine);   // Add to current entry
+            }
+
             lineCount++;
         }
         // CLOSE THE F-ING FILE
         inputFile.close();
     }
 
-    cout << sum;
+    int counter = 0;
+    for (auto it = hash_table.begin(); it != hash_table.end() && counter < 100; it++, counter++)
+    {
+        /* code */
+    }
+    
+
+    cout << lineCount << endl;
 
     return 0;
 }
