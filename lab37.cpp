@@ -45,9 +45,9 @@ int main()
     }
 
     int counter = 0;
-    for (auto it = hash_table.begin(); it != hash_table.end() && counter < 100; it++, counter++)
+    for (auto it = hash_table.begin(); it != hash_table.end() && counter < 100; it++)
     {
-        /* code */
+        
     }
     
 
