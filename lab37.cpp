@@ -15,6 +15,7 @@ int main()
     int lineCount = 0;                 // Count of the number of lines from input file
     int sum = 0;                       // Sum of ascii codes
     map<int, list<string>> hash_table; // Table holding values from file
+    int hashIndex = 0;                 // Hash index of line within loop
 
     // Try opening file and output error to console if file is no good
     inputFile.open(INPUT_FILENAME);
@@ -26,7 +27,15 @@ int main()
     {
         while (getline(inputFile, fileLine))
         {
-            sum += gen_hash_index(fileLine);
+            hashIndex = gen_hash_index(fileLine);
+            auto it = hash_table.find(hashIndex);
+            if (it == hash_table.end()) // Key does NOT exist
+            {
+                hash_table.insert({hashIndex, {fileLine}});
+            } else {
+                hash_table.at(hashIndex).push_back(fileLine);
+            }
+            
             lineCount++;
         }
         // CLOSE THE F-ING FILE
