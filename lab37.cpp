@@ -8,9 +8,11 @@ const string INPUT_FILENAME = "lab37Data.txt"; // Filename for data input
 
 int main()
 {
-    ifstream inputFile;     // For ascii codes
-    string fileLine = "";   // A line from the input file
-    
+    ifstream inputFile;   // For ascii codes
+    string fileLine = ""; // A line from the input file
+    int lineCount = 0;    // Count of the number of lines from input file
+    int sum = 0;          // Sum of ascii codes
+
     // Try opening file and output error to console if file is no good
     inputFile.open(INPUT_FILENAME);
     if (!inputFile)
@@ -21,13 +23,14 @@ int main()
     {
         while (getline(inputFile, fileLine))
         {
-            bTree.insertNode(fileLine);
+            sum += sum_ascii(fileLine);
             lineCount++;
         }
-
         // CLOSE THE F-ING FILE
         inputFile.close();
     }
+
+    cout << sum;
 
     return 0;
 }
