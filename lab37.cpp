@@ -1,17 +1,20 @@
 #include <iostream>
 #include <fstream>
+#include <map>
+#include <list>
 using namespace std;
 
-int sum_ascii(const string &); // Receives a single string and returns the sum of that string's character's ASCII values
+int gen_hash_index(const string &); // Receives a single string and returns the sum of that string's character's ASCII values
 
 const string INPUT_FILENAME = "lab37Data.txt"; // Filename for data input
 
 int main()
 {
-    ifstream inputFile;   // For ascii codes
-    string fileLine = ""; // A line from the input file
-    int lineCount = 0;    // Count of the number of lines from input file
-    int sum = 0;          // Sum of ascii codes
+    ifstream inputFile;                // For ascii codes
+    string fileLine = "";              // A line from the input file
+    int lineCount = 0;                 // Count of the number of lines from input file
+    int sum = 0;                       // Sum of ascii codes
+    map<int, list<string>> hash_table; // Table holding values from file
 
     // Try opening file and output error to console if file is no good
     inputFile.open(INPUT_FILENAME);
@@ -23,7 +26,7 @@ int main()
     {
         while (getline(inputFile, fileLine))
         {
-            sum += sum_ascii(fileLine);
+            sum += gen_hash_index(fileLine);
             lineCount++;
         }
         // CLOSE THE F-ING FILE
@@ -36,7 +39,7 @@ int main()
 }
 
 // Receives a single string and returns the sum of that string's character's ASCII values
-int sum_ascii(const string &s)
+int gen_hash_index(const string &s)
 {
     int sum = 0;
     for (char letter : s)
