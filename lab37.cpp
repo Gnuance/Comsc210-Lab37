@@ -25,13 +25,14 @@
 #include <list>
 using namespace std;
 
-int gen_hash_index(const string &);               // Receives a single string and returns the sum of that string's character's ASCII values
-int mainMenu();                                   // Outputs prompt and collects user selection
-bool isValidOption(string, const int, const int); // Helper function to validate user input
-void addKey();                                    // Adds key to table
-void searchKey();                                 // Returns whether key exists and related values
-void removeKey();                                 // Removes key and related values
-void modifyKey();                                 // Modifies a key and transfers list values to new key
+int gen_hash_index(const string &);                           // Receives a single string and returns the sum of that string's character's ASCII values
+int mainMenu();                                               // Outputs prompt and collects user selection
+bool isValidOption(string, const int, const int);             // Helper function to validate user input
+void PrintEntries(const map<int, list<string>> &, const int); // Print number of entries specified
+void addKey();                                                // Adds key to table
+void searchKey();                                             // Returns whether key exists and related values
+void removeKey();                                             // Removes key and related values
+void modifyKey();                                             // Modifies a key and transfers list values to new key
 
 const string INPUT_FILENAME = "lab37Data.txt"; // Filename for data input
 
@@ -44,6 +45,7 @@ int main()
     map<int, list<string>> hash_table; // Table holding values from file
     int hashIndex = 0;                 // Hash index of line within loop
     const int NUM_LINES_OUTPUT = 100;  // Number of lines to output
+    int userSelectedOption = 0;        // Holds user selection
 
     // Try opening file and output error to console if file is no good
     inputFile.open(INPUT_FILENAME);
@@ -72,14 +74,39 @@ int main()
         inputFile.close();
     }
 
-    int counter = 0;                                                                                        // Counter for lines of output
-    for (auto itMap = hash_table.begin(); itMap != hash_table.end() && counter < NUM_LINES_OUTPUT; itMap++) // For each map object
+    // Prompt user for selection and input
+    // User selection 0 is the program exit code
+    do
     {
-        for (auto itList = itMap->second.begin(); itList != itMap->second.end() && counter < NUM_LINES_OUTPUT; itList++) // For each list inside map
+        userSelectedOption = mainMenu();
+        switch (userSelectedOption)
         {
-            cout << fixed << setw(3) << right << ++counter << ". " << *itList << endl; // Counter incremented in statement
+        case 1:
+            // Outputs given number of items to console
+            PrintEntries(hash_table, NUM_LINES_OUTPUT);
+            break;
+        case 2:
+            // Takes user to function to delete a given text string within tree
+            addKey();
+            break;
+        case 3:
+            // Deletes key and associated data
+            removeKey();
+            break;
+        case 4:
+            // Tells user whether a key exists
+            searchKey();
+            break;
+        case 5:
+            // Allows user to modify a key
+            modifyKey();
+            break;
+        default:
+            break;
         }
-    }
+    } while (userSelectedOption != 0);
+
+    cout << "Thank you for using the BST management tool" << endl;
 
     cout << "\nTotal lines read from " << INPUT_FILENAME << ": " << lineCount << endl;
 
@@ -146,22 +173,35 @@ bool isValidOption(string userInput, const int minOption, const int maxOption)
     return true;
 }
 
-// Adds key to table
-void addKey(){
+// Print number of entries specified
+void PrintEntries(const map<int, list<string>> &mapContainer, const int numToPrint)
+{
+    int counter = 0;                                                                                      // Counter for lines of output
+    for (auto itMap = mapContainer.begin(); itMap != mapContainer.end() && counter < numToPrint; itMap++) // For each map object
+    {
+        for (auto itList = itMap->second.begin(); itList != itMap->second.end() && counter < numToPrint; itList++) // For each list inside map
+        {
+            cout << fixed << setw(3) << right << ++counter << ". " << *itList << endl; // Counter incremented in statement
+        }
+    }
+}
 
+// Adds key to table
+void addKey()
+{
 }
 
 // Returns whether key exists and related values
-void searchKey(){
-
+void searchKey()
+{
 }
 
 // Removes key and related values
-void removeKey(){
-
+void removeKey()
+{
 }
 
 // Modifies a key and transfers list values to new key
-void modifyKey(){
-
+void modifyKey()
+{
 }
