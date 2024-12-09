@@ -10,7 +10,7 @@
             - Create the std::map named hash_table. The key in the map is an int, the hash index. The value in a map is a std::list, which will contain the 12-character codes from the file that all map to that hash index.
             - When codes are read from the file, send the code to your function. Receive its hash index that's returned from the function. Input that pair into the map (the hash index and the code string). Remember that the code string is going into a std::list, so use the appropriate method to manipulate that std::list.
             - Display just the first 100 map entries to the console to test your data structure. Remember how to access map elements with .first and .second as necessary.
-    
+
     Lab 38: Hash Tables II
         1. Add an interactive menu to your Lab 37 project with these new features:
             - Print the first 100 entries; search for a key; add a key; remove a key; modify a key; and exit.
@@ -25,7 +25,9 @@
 #include <list>
 using namespace std;
 
-int gen_hash_index(const string &); // Receives a single string and returns the sum of that string's character's ASCII values
+int gen_hash_index(const string &);               // Receives a single string and returns the sum of that string's character's ASCII values
+int mainMenu();                                   // Outputs prompt and collects user selection
+bool isValidOption(string, const int, const int); // Helper function to validate user input
 
 const string INPUT_FILENAME = "lab37Data.txt"; // Filename for data input
 
@@ -89,4 +91,53 @@ int gen_hash_index(const string &s)
         sum += (int)letter;
     }
     return sum;
+}
+
+// Main menu for application
+int mainMenu()
+{
+    string userInput = "";
+
+    do
+    {
+        // output prompt
+        cout << "\nHash Table Menu" << "\n"
+             << "[1] Print first 100 entries" << "\n"
+             << "[2] Add a key" << "\n"
+             << "[3] Remove a key" << "\n"
+             << "[4] Modify node" << "\n"
+             << "[0] Quit" << "\n"
+             << "Choice --> ";
+        getline(cin, userInput); // get user input as string and test
+        cout << endl;
+    } while (!isValidOption(userInput, 0, 4));
+
+    // if isValidOption passed, stoi(userInput) has already been tested and is safe
+    return stoi(userInput);
+}
+
+// Return t/f if userInput is a valid int between min and max
+// WARNING: stoi() will convert a double to an int or any string following an int.
+// Ex: stoi("2.9") will return 2 and so will stoi("2tGznso"), etc.
+bool isValidOption(string userInput, const int minOption, const int maxOption)
+{
+    int selectedOption = 0;
+    try
+    {
+        selectedOption = stoi(userInput);
+    }
+    catch (const std::exception &e)
+    {
+        cout << "Invalid input: Please enter a valid integer." << "\n\n";
+        return false;
+    }
+
+    // if userInput is an int but outside expected range
+    if (selectedOption < minOption || selectedOption > maxOption)
+    {
+        cout << "Invalid input: Please enter an integer between " << minOption << " and " << maxOption << "." << "\n\n";
+        return false;
+    }
+
+    return true;
 }
