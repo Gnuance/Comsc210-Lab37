@@ -298,9 +298,9 @@ void modifyKey(map<int, list<string>> &mapContainer)
     }
     else // Key exists, get new key from user
     {
-        // Get new key from user
         string newUserInput = "";
         int newUserInt = 0;
+        // Get new key from user
         do
         {
             cout << "Please enter a new integer to replace Key (0-INT_MAX. Leave empty to cancel operation): ";
@@ -316,22 +316,21 @@ void modifyKey(map<int, list<string>> &mapContainer)
         // New key to insert values into
         newUserInt = stoi(newUserInput);
         // Get values from current key and append to new user provided key or create new key/value
-        auto itList = mapContainer.find(newUserInt);
-        if (itList == mapContainer.end()) // Key does NOT exist
+        auto itNew = mapContainer.find(newUserInt);
+        if (itNew == mapContainer.end()) // New key does NOT exist so insert new key with current values
         {
             // Insert new entry into map
-
-            cout << "Key: \"" << userInt << "\" does not exist." << endl;
+            mapContainer.insert({newUserInt, it->second}); // Create new entry with current list
+            cout << "Key: " << userInt << " modified to " << newUserInt << "." << endl;
             return;
         }
-        else
+        else // New key already exists and current values must be inserted into existing key
         {
-
-            for (string s : itList)
-            {
-                *it->second.insert(s);
-            }
-
-            cout << "Key: \"" << userInt << "\" has been removed." << endl;
+            // Append values from old key to end of new key value
+            itNew->second.insert(itNew->second.end(), it->second.begin(), it->second.end());
+            // Remove old key
+            mapContainer.erase(userInt);
+            cout << "Key: " << newUserInt << " already exists and values have been appended." << endl;
         }
     }
+}
