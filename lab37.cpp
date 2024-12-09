@@ -28,6 +28,10 @@ using namespace std;
 int gen_hash_index(const string &);               // Receives a single string and returns the sum of that string's character's ASCII values
 int mainMenu();                                   // Outputs prompt and collects user selection
 bool isValidOption(string, const int, const int); // Helper function to validate user input
+void addKey();                                    // Adds key to table
+void searchKey();                                 // Returns whether key exists and related values
+void removeKey();                                 // Removes key and related values
+void modifyKey();                                 // Modifies a key and transfers list values to new key
 
 const string INPUT_FILENAME = "lab37Data.txt"; // Filename for data input
 
@@ -100,19 +104,19 @@ int mainMenu()
 
     do
     {
-        // output prompt
+        // Output prompt
         cout << "\nHash Table Menu" << "\n"
              << "[1] Print first 100 entries" << "\n"
-             << "[2] Add a key" << "\n"
-             << "[3] Remove a key" << "\n"
-             << "[4] Modify node" << "\n"
+             << "[2] Add key" << "\n"
+             << "[3] Remove key" << "\n"
+             << "[4] Modify key" << "\n"
              << "[0] Quit" << "\n"
              << "Choice --> ";
-        getline(cin, userInput); // get user input as string and test
+        getline(cin, userInput); // Get user input as string and test
         cout << endl;
     } while (!isValidOption(userInput, 0, 4));
 
-    // if isValidOption passed, stoi(userInput) has already been tested and is safe
+    // If isValidOption passed, stoi(userInput) has already been tested and is safe
     return stoi(userInput);
 }
 
@@ -140,4 +144,24 @@ bool isValidOption(string userInput, const int minOption, const int maxOption)
     }
 
     return true;
+}
+
+// Adds key to table
+void addKey(){
+
+}
+
+// Returns whether key exists and related values
+void searchKey(){
+
+}
+
+// Removes key and related values
+void removeKey(){
+
+}
+
+// Modifies a key and transfers list values to new key
+void modifyKey(){
+
 }
