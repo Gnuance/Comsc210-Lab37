@@ -209,21 +209,96 @@ void addKey(map<int, list<string>> &mapContainer)
     else
     {
         cout << "Key: \"" << userInt << "\" already exists." << endl;
-        ; // Add to current entry
     }
 }
 
 // Returns whether key exists and related values
 void searchKey(const map<int, list<string>> &mapContainer)
 {
+    string userInput = "";
+    int userInt = 0;
+    do
+    {
+        cout << "Please enter a Key to search for in the hash table (Leave empty to cancel operation): ";
+        getline(cin, userInput);
+        // Guard against empty string and return
+        if (userInput == "")
+        {
+            cout << "Operation Cancelled." << endl;
+            return;
+        }
+    } while (!isValidOption(userInput, 0, INT_MAX));
+    // User input verified, search for key in container
+    userInt = stoi(userInput);
+    auto it = mapContainer.find(userInt); // Iterator to hash bucket in map
+    if (it == mapContainer.end())         // Key does NOT exist
+    {
+        cout << "Key: \"" << userInt << "\" does not exist." << endl;
+    }
+    else
+    {
+        cout << "Key: \"" << userInt << "\" exists." << endl;
+    }
 }
 
 // Removes key and related values
 void removeKey(map<int, list<string>> &mapContainer)
 {
+    string userInput = "";
+    int userInt = 0;
+    do
+    {
+        cout << "Please enter a Key to remove from the hash table (Leave empty to cancel operation): ";
+        getline(cin, userInput);
+        // Guard against empty string and return
+        if (userInput == "")
+        {
+            cout << "Operation Cancelled." << endl;
+            return;
+        }
+    } while (!isValidOption(userInput, 0, INT_MAX));
+    // User input verified, search for key in container
+    userInt = stoi(userInput);
+    auto it = mapContainer.find(userInt); // Iterator to hash bucket in map
+    if (it == mapContainer.end())         // Key does NOT exist
+    {
+        cout << "Key: \"" << userInt << "\" does not exist." << endl;
+    }
+    else
+    {
+        mapContainer.erase(userInt);
+        cout << "Key: \"" << userInt << "\" has been removed." << endl;
+    }
 }
 
 // Modifies a key and transfers list values to new key
 void modifyKey(map<int, list<string>> &mapContainer)
 {
+    string userInput = "";
+    string newUserInput = "";
+    int userInt = 0;
+    do
+    {
+        cout << "Please enter a Key to modify from the hash table (Leave empty to cancel operation): ";
+        getline(cin, userInput);
+        // Guard against empty string and return
+        if (userInput == "")
+        {
+            cout << "Operation Cancelled." << endl;
+            return;
+        }
+    } while (!isValidOption(userInput, 0, INT_MAX));
+    // User input verified, search for key in container
+    userInt = stoi(userInput);
+    auto it = mapContainer.find(userInt); // Iterator to hash bucket in map
+    if (it == mapContainer.end())         // Key does NOT exist
+    {
+        cout << "Key: \"" << userInt << "\" does not exist." << endl;
+    }
+    else
+    {
+        // Get values from current key and move to new user provided key
+        mapContainer.at(userInt);
+        cout << "Key: \"" << userInt << "\" has been removed." << endl;
+    }
 }
