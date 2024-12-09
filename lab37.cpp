@@ -41,7 +41,6 @@ int main()
 {
     ifstream inputFile;                // For ascii codes
     string fileLine = "";              // A line from the input file
-    int lineCount = 0;                 // Count of the number of lines from input file
     int sum = 0;                       // Sum of ascii codes
     map<int, list<string>> hash_table; // Table holding values from file
     int hashIndex = 0;                 // Hash index of line within loop
@@ -68,8 +67,6 @@ int main()
             {
                 it->second.push_back(fileLine); // Add to current entry
             }
-
-            lineCount++;
         }
         // CLOSE THE F-ING FILE
         inputFile.close();
@@ -189,6 +186,7 @@ void PrintEntries(const map<int, list<string>> &mapContainer, const int numToPri
 void addKey(map<int, list<string>> &mapContainer)
 {
     string userInput = "";
+    int userInt = 0;
     do
     {
         cout << "Please enter a Key to add to the hash table (Leave empty to cancel operation): ";
@@ -200,9 +198,19 @@ void addKey(map<int, list<string>> &mapContainer)
             return;
         }
     } while (!isValidOption(userInput, 0, INT_MAX));
-    // Insert user defined key into container
-    mapContainer.insertNode(userInput);
-    cout << "String: \"" << userInput << "\" inserted into tree." << endl;
+    // User input verified, insert user defined key into container
+    userInt = stoi(userInput);
+    auto it = mapContainer.find(userInt); // Iterator to hash bucket in map
+    if (it == mapContainer.end())         // Key does NOT exist
+    {
+        mapContainer.insert({userInt, {}}); // Insert new key with empty list into table
+        cout << "Key: \"" << userInt << "\" inserted into table." << endl;
+    }
+    else
+    {
+        cout << "Key: \"" << userInt << "\" already exists." << endl;
+        ; // Add to current entry
+    }
 }
 
 // Returns whether key exists and related values
