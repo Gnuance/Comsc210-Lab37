@@ -276,6 +276,7 @@ void modifyKey(map<int, list<string>> &mapContainer)
 {
     string userInput = "";
     int userInt = 0;
+    // Get key to modify from user
     do
     {
         cout << "Please enter a Key to modify from the hash table (0-INT_MAX. Leave empty to cancel operation): ";
@@ -289,15 +290,17 @@ void modifyKey(map<int, list<string>> &mapContainer)
     } while (!isValidOption(userInput, 0, INT_MAX));
     // User input verified, search for key in container
     userInt = stoi(userInput);
-    auto it = mapContainer.find(userInt); // Iterator to hash bucket in map
+    auto it = mapContainer.find(userInt); // Iterator to current key in map
     if (it == mapContainer.end())         // Key does NOT exist
     {
         cout << "Key: \"" << userInt << "\" does not exist." << endl;
+        return;
     }
-    else
+    else // Key exists, get new key from user
     {
         // Get new key from user
         string newUserInput = "";
+        int newUserInt = 0;
         do
         {
             cout << "Please enter a new integer to replace Key (0-INT_MAX. Leave empty to cancel operation): ";
@@ -310,14 +313,25 @@ void modifyKey(map<int, list<string>> &mapContainer)
             }
         } while (!isValidOption(newUserInput, 0, INT_MAX));
 
-        // Get values from current key and move to new user provided key
-        auto itList = mapContainer.at(userInt);
-        for (string s : itList)
+        // New key to insert values into
+        newUserInt = stoi(newUserInput);
+        // Get values from current key and append to new user provided key or create new key/value
+        auto itList = mapContainer.find(newUserInt);
+        if (itList == mapContainer.end()) // Key does NOT exist
         {
-            *it->second.insert(s);
+            // Insert new entry into map
+
+            cout << "Key: \"" << userInt << "\" does not exist." << endl;
+            return;
         }
-        
-        
-        cout << "Key: \"" << userInt << "\" has been removed." << endl;
+        else
+        {
+
+            for (string s : itList)
+            {
+                *it->second.insert(s);
+            }
+
+            cout << "Key: \"" << userInt << "\" has been removed." << endl;
+        }
     }
-}
