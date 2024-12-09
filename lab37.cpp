@@ -23,16 +23,17 @@
 #include <fstream>
 #include <map>
 #include <list>
+#include <climits> // INT_MIN and MAX
 using namespace std;
 
 int gen_hash_index(const string &);                           // Receives a single string and returns the sum of that string's character's ASCII values
 int mainMenu();                                               // Outputs prompt and collects user selection
 bool isValidOption(string, const int, const int);             // Helper function to validate user input
 void PrintEntries(const map<int, list<string>> &, const int); // Print number of entries specified
-void addKey();                                                // Adds key to table
-void searchKey();                                             // Returns whether key exists and related values
-void removeKey();                                             // Removes key and related values
-void modifyKey();                                             // Modifies a key and transfers list values to new key
+void addKey(map<int, list<string>> &);                        // Adds key to table
+void searchKey(const map<int, list<string>> &);               // Returns whether key exists and related values
+void removeKey(map<int, list<string>> &);                     // Removes key and related values
+void modifyKey(map<int, list<string>> &);                     // Modifies a key and transfers list values to new key
 
 const string INPUT_FILENAME = "lab37Data.txt"; // Filename for data input
 
@@ -106,9 +107,7 @@ int main()
         }
     } while (userSelectedOption != 0);
 
-    cout << "Thank you for using the BST management tool" << endl;
-
-    cout << "\nTotal lines read from " << INPUT_FILENAME << ": " << lineCount << endl;
+    cout << "Thank you for using the Hash Table Management Tool" << endl;
 
     return 0;
 }
@@ -187,21 +186,36 @@ void PrintEntries(const map<int, list<string>> &mapContainer, const int numToPri
 }
 
 // Adds key to table
-void addKey()
+void addKey(map<int, list<string>> &mapContainer)
 {
+    string userInput = "";
+    do
+    {
+        cout << "Please enter a Key to add to the hash table (Leave empty to cancel operation): ";
+        getline(cin, userInput);
+        // Guard against empty string and return
+        if (userInput == "")
+        {
+            cout << "Operation Cancelled." << endl;
+            return;
+        }
+    } while (!isValidOption(userInput, 0, INT_MAX));
+    // Insert user defined key into container
+    mapContainer.insertNode(userInput);
+    cout << "String: \"" << userInput << "\" inserted into tree." << endl;
 }
 
 // Returns whether key exists and related values
-void searchKey()
+void searchKey(const map<int, list<string>> &mapContainer)
 {
 }
 
 // Removes key and related values
-void removeKey()
+void removeKey(map<int, list<string>> &mapContainer)
 {
 }
 
 // Modifies a key and transfers list values to new key
-void modifyKey()
+void modifyKey(map<int, list<string>> &mapContainer)
 {
 }
