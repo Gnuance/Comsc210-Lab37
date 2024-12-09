@@ -189,7 +189,7 @@ void addKey(map<int, list<string>> &mapContainer)
     int userInt = 0;
     do
     {
-        cout << "Please enter a Key to add to the hash table (Leave empty to cancel operation): ";
+        cout << "Please enter a Key to add to the hash table (0-INT_MAX. Leave empty to cancel operation): ";
         getline(cin, userInput);
         // Guard against empty string and return
         if (userInput == "")
@@ -219,7 +219,7 @@ void searchKey(const map<int, list<string>> &mapContainer)
     int userInt = 0;
     do
     {
-        cout << "Please enter a Key to search for in the hash table (Leave empty to cancel operation): ";
+        cout << "Please enter a Key to search for in the hash table (0-INT_MAX. Leave empty to cancel operation): ";
         getline(cin, userInput);
         // Guard against empty string and return
         if (userInput == "")
@@ -248,7 +248,7 @@ void removeKey(map<int, list<string>> &mapContainer)
     int userInt = 0;
     do
     {
-        cout << "Please enter a Key to remove from the hash table (Leave empty to cancel operation): ";
+        cout << "Please enter a Key to remove from the hash table (0-INT_MAX. Leave empty to cancel operation): ";
         getline(cin, userInput);
         // Guard against empty string and return
         if (userInput == "")
@@ -275,11 +275,10 @@ void removeKey(map<int, list<string>> &mapContainer)
 void modifyKey(map<int, list<string>> &mapContainer)
 {
     string userInput = "";
-    string newUserInput = "";
     int userInt = 0;
     do
     {
-        cout << "Please enter a Key to modify from the hash table (Leave empty to cancel operation): ";
+        cout << "Please enter a Key to modify from the hash table (0-INT_MAX. Leave empty to cancel operation): ";
         getline(cin, userInput);
         // Guard against empty string and return
         if (userInput == "")
@@ -297,8 +296,28 @@ void modifyKey(map<int, list<string>> &mapContainer)
     }
     else
     {
+        // Get new key from user
+        string newUserInput = "";
+        do
+        {
+            cout << "Please enter a new integer to replace Key (0-INT_MAX. Leave empty to cancel operation): ";
+            getline(cin, newUserInput);
+            // Guard against empty string and return
+            if (newUserInput == "")
+            {
+                cout << "Operation Cancelled." << endl;
+                return;
+            }
+        } while (!isValidOption(newUserInput, 0, INT_MAX));
+
         // Get values from current key and move to new user provided key
-        mapContainer.at(userInt);
+        auto itList = mapContainer.at(userInt);
+        for (string s : itList)
+        {
+            *it->second.insert(s);
+        }
+        
+        
         cout << "Key: \"" << userInt << "\" has been removed." << endl;
     }
 }
