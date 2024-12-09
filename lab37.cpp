@@ -85,19 +85,19 @@ int main()
             break;
         case 2:
             // Takes user to function to delete a given text string within tree
-            addKey();
+            addKey(hash_table);
             break;
         case 3:
             // Deletes key and associated data
-            removeKey();
+            removeKey(hash_table);
             break;
         case 4:
             // Tells user whether a key exists
-            searchKey();
+            searchKey(hash_table);
             break;
         case 5:
             // Allows user to modify a key
-            modifyKey();
+            modifyKey(hash_table);
             break;
         default:
             break;
@@ -132,12 +132,13 @@ int mainMenu()
              << "[1] Print first 100 entries" << "\n"
              << "[2] Add key" << "\n"
              << "[3] Remove key" << "\n"
-             << "[4] Modify key" << "\n"
+             << "[4] Search key" << "\n"
+             << "[5] Modify key" << "\n"
              << "[0] Quit" << "\n"
              << "Choice --> ";
         getline(cin, userInput); // Get user input as string and test
         cout << endl;
-    } while (!isValidOption(userInput, 0, 4));
+    } while (!isValidOption(userInput, 0, 5));
 
     // If isValidOption passed, stoi(userInput) has already been tested and is safe
     return stoi(userInput);
@@ -205,10 +206,12 @@ void addKey(map<int, list<string>> &mapContainer)
     {
         mapContainer.insert({userInt, {}}); // Insert new key with empty list into table
         cout << "Key: \"" << userInt << "\" inserted into table." << endl;
+        return;
     }
     else
     {
         cout << "Key: \"" << userInt << "\" already exists." << endl;
+        return;
     }
 }
 
@@ -234,10 +237,12 @@ void searchKey(const map<int, list<string>> &mapContainer)
     if (it == mapContainer.end())         // Key does NOT exist
     {
         cout << "Key: \"" << userInt << "\" does not exist." << endl;
+        return;
     }
     else
     {
         cout << "Key: \"" << userInt << "\" exists." << endl;
+        return;
     }
 }
 
@@ -263,11 +268,13 @@ void removeKey(map<int, list<string>> &mapContainer)
     if (it == mapContainer.end())         // Key does NOT exist
     {
         cout << "Key: \"" << userInt << "\" does not exist." << endl;
+        return;
     }
     else
     {
         mapContainer.erase(userInt);
         cout << "Key: \"" << userInt << "\" has been removed." << endl;
+        return;
     }
 }
 
@@ -322,15 +329,15 @@ void modifyKey(map<int, list<string>> &mapContainer)
             // Insert new entry into map
             mapContainer.insert({newUserInt, it->second}); // Create new entry with current list
             cout << "Key: " << userInt << " modified to " << newUserInt << "." << endl;
-            return;
         }
         else // New key already exists and current values must be inserted into existing key
         {
             // Append values from old key to end of new key value
             itNew->second.insert(itNew->second.end(), it->second.begin(), it->second.end());
-            // Remove old key
-            mapContainer.erase(userInt);
             cout << "Key: " << newUserInt << " already exists and values have been appended." << endl;
         }
+        // Remove old key
+        mapContainer.erase(userInt);
+        return; // Not necessary, but good habit
     }
 }
