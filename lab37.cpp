@@ -16,6 +16,12 @@
             - Print the first 100 entries; search for a key; add a key; remove a key; modify a key; and exit.
         2. In your finished Lab 37, create a new Lab38 branch, and code this assignment on that branch.
             - Do not collapse/merge/pull/squash anything - just leave that branch active so I can see it.
+    
+    Notes:
+        1. Added functions addKey, searchKey, removeKey, and modifyKey are VERY verbose and could be refactored for simplicity, but have been left as is
+            for time convenience.
+        2. Hash table creation in main could be refactored into it's own function to return a map and clean up main, but again, was left as is for time convenience.
+        3. Functions modify Keys ONLY. removeKey and modifyKey will affect values as well, but functions provide no access to user to interact with Values directly.
 */
 
 #include <iostream>
